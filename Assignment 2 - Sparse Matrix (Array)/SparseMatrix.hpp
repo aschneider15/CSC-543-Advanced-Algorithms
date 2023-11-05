@@ -10,19 +10,25 @@ private:
     int* column;
     int* value;
     int size;
+    int width;
+    int height;
 
 public:
-    // constructor
-    SparseMatrix(int* row, int* column, int* value, int size);
+    // constructor and destructor
+    SparseMatrix(int* row, int* column, int* value, int size, int width, int height);
+    ~SparseMatrix();
     
     // getters
     int* getRow() { return this->row; };
     int* getColumn() { return this->column; };
     int* getValue() { return this->value; };
-    int getSize() { return this->size; };
+    int getSize() { return this-> size; };
+    int getWidth() { return this->width; };
+    int getHeight() { return this->height; };
 
-
-    void printElements();
+    // helper functions
+    void printComprisingArrays();
+    void printMatrix();
 };
 
 #endif
