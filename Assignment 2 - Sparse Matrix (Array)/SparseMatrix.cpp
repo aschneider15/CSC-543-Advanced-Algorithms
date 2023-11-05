@@ -63,25 +63,33 @@ void SparseMatrix::printMatrix() {
 
     int rpos, cpos, vpos; //keep track of positions while searching through each array
     rpos = cpos = vpos = 0; //i initialize at position 0
+    int mat[h][w];
 
-    /* 
-    Go through nested for-loops
-    If row[current position] = outer loop position AND column[current position] = inner loop position
-        Print the value at those coordinates, followed by a space
-        Then advance all of the row, column, value positions.
-    Otherwise, print a a zero.
-     */
-    for(int i = 0; i < h; i++) { // iterates through rows
-        for(int j = 0; j < w; j++) { // iterates through columns
-            if(r[rpos] == i && c[cpos] == j) {
-                printf("%d ", v[vpos]);
-                rpos++;
-                cpos++;
-                vpos++;
-            } else {
-                printf("0 "); // blank - no value
-            }
+    /*
+        Create a matrix of size (height x width) full of zeroes.
+        Go through the row, column and value arrays, altering
+        each coordinate in the first two arrays with the value
+        of the third array.
+    */
+   
+    // fill the matrix with all zeroes
+    for(int i = 0; i < h; i++) {
+        for(int j = 0; j < w; j++) {
+            mat[i][j] = 0;
         }
-        printf("\n"); // new line after each row completes
+    }
+
+    // replace values from comprising arrays
+    for(int i = 0; i < this->size; i++) {
+        mat[r[i]][c[i]] = v[i];
+    }
+
+    // display resulting matrix
+    for(int i = 0; i < h; i++) {
+        for(int j = 0; j < w; j++) {
+            printf("%d ", mat[i][j]);
+        }
+        // seperate row with new line
+        printf("\n");
     }
 }
