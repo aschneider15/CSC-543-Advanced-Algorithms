@@ -5,6 +5,21 @@
 /*  private functions  */
 /////////////////////////
 
+void table::populateTable() {
+    // have to start at 1,1 in order to compensate for the 
+    // edges of the table inherent to the problem.
+    for(int i = 1; i < this->rowsize; i++) {
+        for(int j = 1; j < this->colsize; j++) {
+            // if the characters at the given index are the same,
+            // then poll the previous row and column's value
+            // and add one to it.
+            if(this->s2.at(j-1) == this->s1.at(i-1)) {
+                this->mat[i][j] = this->mat[i - 1][j - 1] + 1;
+            }
+        }
+    }
+};
+
 /////////////////////////
 /* protected functions */
 /////////////////////////
@@ -60,7 +75,5 @@ void table::printMatrix() {
 };
 
 int * table::longestCommonSubstring() {
-    int output[3] = {-1, -1, -1};
-    //for(int i = 0; i < )
-    return output;
+    this->populateTable();
 };

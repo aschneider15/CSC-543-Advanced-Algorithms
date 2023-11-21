@@ -5,9 +5,9 @@
 using namespace std;
 
 int main(){
-    table * t = new table("seven", "eight");
+    table * t = new table("seven", "eleven");
     t->printMatrix();
-    t->setValueAt(0, 4, 6);
+    t->longestCommonSubstring();
     cout << "after print" << endl;
     t->printMatrix();
 };

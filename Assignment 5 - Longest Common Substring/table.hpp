@@ -13,8 +13,6 @@ private:
     int rowsize;
     int colsize;
 
-    
-
 protected:
 public:
     table(std::string s1, std::string s2);
@@ -24,6 +22,7 @@ public:
     void setValueAt(int row, int col, int val);
     
     void printMatrix();
+    void populateTable();
     int * longestCommonSubstring(); 
 };
 
