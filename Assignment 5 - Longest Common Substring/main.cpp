@@ -5,8 +5,9 @@
 using namespace std;
 
 int main(){
-    table * t = new table("hello world", "hi world");
+    table * t = new table("seven", "eight");
     t->printMatrix();
+    t->setValueAt(0, 4, 6);
     cout << "after print" << endl;
-    cout << t->getValueAt(0, 4) << endl;
+    t->printMatrix();
 };

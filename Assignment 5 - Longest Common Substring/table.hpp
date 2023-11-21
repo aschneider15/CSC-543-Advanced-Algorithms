@@ -20,8 +20,11 @@ public:
     table(std::string s1, std::string s2);
     ~table();
     
-    int getValueAt(int row, int col);    
+    int getValueAt(int row, int col);
+    void setValueAt(int row, int col, int val);
+    
     void printMatrix();
+    int * longestCommonSubstring(); 
 };
 
 #endif 
