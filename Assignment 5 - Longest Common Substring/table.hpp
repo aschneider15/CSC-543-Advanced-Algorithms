@@ -22,8 +22,7 @@ public:
     void setValueAt(int row, int col, int val);
     
     void printMatrix();
-    void populateTable();
-    int * longestCommonSubstring(); 
+    std::string longestCommonSubstring(); 
 };
 
 #endif 

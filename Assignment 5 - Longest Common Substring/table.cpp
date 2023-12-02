@@ -1,33 +1,6 @@
 #include "table.hpp"
 #include <iostream>
 
-/////////////////////////
-/*  private functions  */
-/////////////////////////
-
-void table::populateTable() {
-    // have to start at 1,1 in order to compensate for the 
-    // edges of the table inherent to the problem.
-    for(int i = 1; i < this->rowsize; i++) {
-        for(int j = 1; j < this->colsize; j++) {
-            // if the characters at the given index are the same,
-            // then poll the previous row and column's value
-            // and add one to it.
-            if(this->s2.at(j-1) == this->s1.at(i-1)) {
-                this->mat[i][j] = this->mat[i - 1][j - 1] + 1;
-            }
-        }
-    }
-};
-
-/////////////////////////
-/* protected functions */
-/////////////////////////
-
-/////////////////////////
-/*  public functions   */
-/////////////////////////
-
 table::table(std::string s1, std::string s2) {
     // create the matrix
     // row size is s1 size, column size is s2 size.
@@ -74,6 +47,26 @@ void table::printMatrix() {
     }
 };
 
-int * table::longestCommonSubstring() {
-    this->populateTable();
+std::string table::longestCommonSubstring() {
+    int maxLen = 0;
+    int endIndex = 0;
+    // have to start at 1,1 in order to compensate for the 
+    // edges of the table inherent to the problem.
+    for(int i = 1; i < this->rowsize; i++) {
+        for(int j = 1; j < this->colsize; j++) {
+            // if the characters at the given index are the same,
+            // then poll the previous row and column's value
+            // and add one to it.
+            if(this->s2.at(j-1) == this->s1.at(i-1)) {
+                this->mat[i][j] = this->mat[i - 1][j - 1] + 1;
+                if(this->mat[i][j] > maxLen) {
+                    maxLen = this->mat[i][j];
+                    endIndex = j;
+                }
+            }
+        }
+    }
+    std::string output = s2.substr( endIndex - maxLen, maxLen);
+    return output;
+
 };
