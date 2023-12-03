@@ -1,40 +1,36 @@
 #include <iostream>
-#include "SearchTree.hpp"
+#include <queue>
+#include <unordered_map>
+#include "HuffmanTree.hpp"
 
 using namespace std;
 
 int main() {
-    SearchTree treeRoot, treeRoot1;
-    int num;
-    cout << "Enter numbers. Use -999 to terminate." << endl;
-    do{
-        cin >> num;
-        treeRoot.insert(num);
-    } while(num != -999);
+    std::unordered_map<char, int> frequencyTable;
+    std::string characters;
+    std::vector<int> frequencies;
+    int freq;
 
-    cout << endl;
-    
-    treeRoot.inorderTraversal();
-    
-    cout << endl << "Tree Height: " << treeRoot.treeHeight() << endl << endl;
+    cout << "Input your string of unique characters: ";
+    cin >> characters;
+    cout << endl << "Input the frequency for the following strings:" << endl;
+    for(int i = 0; i < characters.size(); i++) {
+        cout << characters[i] << ": ";
+        cin >> freq;
+        frequencies.push_back(freq);
+        frequencyTable[characters[i]] = frequencies[i];
+    }
+    cout << "Frequency table created. Attempting creation of Huffman Tree." << endl;
 
-    cout << endl << "Tree nodes in preorder: ";
-    treeRoot.preorderTraversal();
+    HuffmanTree * Hello = new HuffmanTree(frequencyTable);
 
-    cout << endl << "Tree nodes in postorder: ";
-    treeRoot.postorderTraversal();
+    cout << "Huffman Table created. Generating Huffman codes: " << endl;
 
-    treeRoot1 = treeRoot;
-    cout << endl << "Second Tree nodes in inorder: ";
-    treeRoot1.inorderTraversal();
+    std::unordered_map<char, std::string> outputMap = Hello->getHuffmanCode();
 
-    cout << endl << "Enter a value to delete from the tree: " << endl;
-    int deletedItem;
-    cin >> deletedItem;
-    treeRoot1.deleteNode(deletedItem);
-
-    cout << endl << "Tree nodes after delete operation in inorder: ";
-    treeRoot1.inorderTraversal();
+    for(const auto& pair : outputMap) {
+        cout << "Character: " << pair.first << "\tValue: " << pair.second << endl;
+    }
 
     return 0;
 };

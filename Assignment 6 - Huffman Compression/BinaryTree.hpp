@@ -6,7 +6,7 @@
 class BinaryTree {
     protected:
         struct Node{
-            int info;
+            char info;
             Node * llink;
             Node * rlink;
         };
