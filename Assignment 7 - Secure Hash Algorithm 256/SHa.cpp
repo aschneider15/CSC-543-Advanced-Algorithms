@@ -3,11 +3,15 @@
 SHa::SHa(char * input, uint64_t length) {
     this->length = length;
     concatenateBits(input);
-    while(!this->words.empty()) {
-        // std::cout << std::hex << this->words.front() << std::endl;
-        std::cout << std::bitset<32>(this->words.front()) << std::endl;
-        this->words.pop();
-    }
+    populateChunks();
+    /* 
+        for(std::vector<uint32_t> v : this->chunks) {
+            for(uint32_t word : v) {
+                std::cout << std::bitset<32>(word) << std::endl;
+            }
+            std::cout << std::endl;
+        } 
+    */
 };
 
 void SHa::concatenateBits(char* charArray) {
@@ -58,16 +62,6 @@ void SHa::concatenateBits(char* charArray) {
         this->words.push(0x80000000);
     }
 };
-
-
-
-
-
-
-
-
-
-
 
 void SHa::populateChunks() {
     // Create temporary chunk buffer
