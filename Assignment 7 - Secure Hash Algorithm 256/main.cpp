@@ -1,9 +1,15 @@
+#include <fstream>
 #include <string.h>
+#include <stdlib.h>
 #include "SHa.hpp"
 
+using namespace std;
 
 int main() {
-    char * input = "What is a man? A miserable little pile of secrets! But enough talk... have at you!";
-    SHa * SHaObject = new SHa(input, strlen(input));
-    return 0;
+    // Import the file and process it to be used as a char *
+    ifstream file("Mark.txt");
+    string str((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+    const char* gospel = str.c_str();
+
+    SHa * gospelHash = new SHa(gospel, strlen(gospel));
 };

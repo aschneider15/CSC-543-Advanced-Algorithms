@@ -1,7 +1,9 @@
 #ifndef SHA.HPP
 #define SHA.HPP
 
+#include <array>
 #include <bitset>
+#include <iomanip>
 #include <iostream>
 #include <queue>
 #include <string.h>
@@ -10,8 +12,13 @@
 class SHa {
     private:
         /* fields */
-        // Initial values for the hash.
+        // Length of the original message.
         uint64_t length;
+
+        // Message schedule derived from chunks.
+        std::vector< std::array<uint32_t, 64> > messageSchedule;
+
+        // Initial values for the hash.
         uint32_t hashInit[8] = {
             0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
         };
@@ -32,22 +39,41 @@ class SHa {
         std::queue<uint32_t> words;
 
         // Vector to hold all of the chunks. Each chunk is composed of 512 bits (sixteen words).
-        std::vector<std::vector<uint32_t>> chunks;
+        std::queue<std::vector<uint32_t>> chunks;
 
         /* helper functions */
         // Converts the input string into 32-bit words four chars at a time, adding them to the SHa object's words queue.
         // The characters represented are padded with a 1-bit followed by 0-bits until the last word is full. If the input array
         // is perfectly divisible by four, an additional word will be added following the convention mentioned previously.
-        void concatenateBits(char * charArray);
+        void concatenateBits(const char * charArray);
         
         // Creates a new chunks from the the words queue. Each chunk consists of sixteen words. The final 64 bits (two words)
         // of a the final chunk will always represent the length of the input array. If a chunk is only partially filled, 
         // words composed of all zeroes will be appended.
         void populateChunks();
+
+        // Creates a new message schedule for each chunk. Since the chunk is already split into 16 32-bit words,
+        // we already have our desired denomination. It then undergoes the hashing technique required by SHA-256.
+        // See the code in the implementation file or Instructions.txt (ln 43) for more details.
+        void createMessageSchedule();
+
+        // Functions for filling out the last 48 words of the message. Derived from first sixteen words, which
+        // is the chunk currently being operated on.
+        uint32_t sigmaZero(uint32_t input);
+        uint32_t sigmaOne(uint32_t input);
+
+        // Functions used in the compression algorithm. 
+        uint32_t capSigmaZero(uint32_t input);
+        uint32_t capSigmaOne(uint32_t input);
+        uint32_t choose(uint32_t e, uint32_t f, uint32_t g);
+        uint32_t majority(uint32_t a, uint32_t b, uint32_t c);
+
+        // Compresses message schedule into hashed values.
+        uint32_t * compress();
         
     protected:
     public:
-        SHa(char * input, uint64_t length);
+        SHa(const char * input, uint64_t length);
 };
 
 #endif
